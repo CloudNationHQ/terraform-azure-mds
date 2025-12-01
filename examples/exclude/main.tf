@@ -56,7 +56,8 @@ module "network" {
 }
 
 module "diagnostics" {
-  source = "../../"
+  source  = "cloudnationhq/mds/azure"
+  version = "~> 1.0"
 
   log_analytics_workspace_id = module.law.workspace.id
 
