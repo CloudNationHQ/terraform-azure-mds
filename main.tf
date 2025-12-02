@@ -1,3 +1,26 @@
+# existing log analytics workspace individual and global
+data "azurerm_log_analytics_workspace" "existing" {
+  for_each = merge(
+    {
+      for key, setting in var.config.settings :
+      "ex_${key}" => {
+        name                = setting.name
+        resource_group_name = setting.resource_group_name
+      }
+      if setting.use_existing_workspace && setting.name != null && setting.resource_group_name != null
+    },
+    var.destinations != null && var.destinations.use_existing_workspace && var.destinations.name != null && var.destinations.resource_group_name != null ? {
+      "ex_global" = {
+        name                = var.destinations.name
+        resource_group_name = var.destinations.resource_group_name
+      }
+    } : {}
+  )
+
+  name                = each.value.name
+  resource_group_name = each.value.resource_group_name
+}
+
 data "azurerm_monitor_diagnostic_categories" "this" {
   for_each = var.config.settings
 
@@ -9,7 +32,7 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
   for_each = var.config.settings
 
   name = coalesce(
-    each.value.name,
+    each.value.diag_name,
     try(var.naming.monitor_diagnostic_setting, null) != null ?
     "${var.naming.monitor_diagnostic_setting}-${each.key}" :
     "diag-${each.key}"
@@ -17,7 +40,12 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
 
   target_resource_id = each.value.target_resource_id
   log_analytics_workspace_id = try(
-    coalesce(each.value.log_analytics_workspace_id, var.log_analytics_workspace_id),
+    coalesce(
+      each.value.use_existing_workspace ? data.azurerm_log_analytics_workspace.existing["ex_${each.key}"].id : null,
+      each.value.log_analytics_workspace_id,
+      var.destinations != null && var.destinations.use_existing_workspace ? data.azurerm_log_analytics_workspace.existing["ex_global"].id : null,
+      var.destinations != null ? var.destinations.log_analytics_workspace_id : null
+    ),
     null
   )
 

@@ -1,7 +1,3 @@
-provider "azurerm" {
-  features {}
-}
-
 module "naming" {
   source  = "cloudnationhq/naming/azure"
   version = "~> 0.26"
@@ -59,7 +55,9 @@ module "diagnostics" {
   source  = "cloudnationhq/mds/azure"
   version = "~> 1.0"
 
-  log_analytics_workspace_id = module.law.workspace.id
+  destinations = {
+    log_analytics_workspace_id = module.law.workspace.id
+  }
 
   config = {
     settings = {

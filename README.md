@@ -32,6 +32,7 @@ The following providers are used by this module:
 The following resources are used by this module:
 
 - [azurerm_monitor_diagnostic_setting.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting) (resource)
+- [azurerm_log_analytics_workspace.existing](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/log_analytics_workspace) (data source)
 - [azurerm_monitor_diagnostic_categories.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/monitor_diagnostic_categories) (data source)
 
 ## Required Inputs
@@ -51,30 +52,29 @@ object({
     eventhub_name                  = optional(string)
     partner_solution_id            = optional(string)
     log_analytics_destination_type = optional(string)
-
     settings = optional(map(object({
       target_resource_id             = string
       log_analytics_workspace_id     = optional(string)
+      use_existing_workspace         = optional(bool, false)
+      name                           = optional(string)
+      resource_group_name            = optional(string)
       storage_account_id             = optional(string)
       eventhub_authorization_rule_id = optional(string)
       eventhub_name                  = optional(string)
       partner_solution_id            = optional(string)
       log_analytics_destination_type = optional(string)
-
       logs = optional(object({
         enable_all         = optional(bool, true)
         categories         = optional(set(string), [])
         category_groups    = optional(set(string), [])
         exclude_categories = optional(set(string), [])
       }), {})
-
       metrics = optional(object({
         enable_all         = optional(bool, true)
         categories         = optional(set(string), [])
         exclude_categories = optional(set(string), [])
       }), {})
-
-      name = optional(string)
+      diag_name = optional(string)
     })), {})
   })
 ```
@@ -83,11 +83,20 @@ object({
 
 The following input variables are optional (have default values):
 
-### <a name="input_log_analytics_workspace_id"></a> [log\_analytics\_workspace\_id](#input\_log\_analytics\_workspace\_id)
+### <a name="input_destinations"></a> [destinations](#input\_destinations)
 
-Description: Fallback Log Analytics workspace ID for all diagnostic settings (can be overridden per setting)
+Description: Global diagnostic destinations (new or existing)
 
-Type: `string`
+Type:
+
+```hcl
+object({
+    log_analytics_workspace_id = optional(string)
+    use_existing_workspace     = optional(bool, false)
+    name                       = optional(string)
+    resource_group_name        = optional(string)
+  })
+```
 
 Default: `null`
 
