@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/CloudNationHQ/terraform-azure-mds/compare/v1.0.0...v1.1.0) (2026-02-23)
+
+
+### Features
+
+* **deps:** bump github.com/cloudnationhq/az-cn-go-validor in /tests ([#6](https://github.com/CloudNationHQ/terraform-azure-mds/issues/6)) ([18e2832](https://github.com/CloudNationHQ/terraform-azure-mds/commit/18e2832e0e83666693e68c066ba9784194037790))
+
 ## 1.0.0 (2025-12-02)
 
 
