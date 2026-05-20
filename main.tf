@@ -91,6 +91,15 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
 
     content {
       category = enabled_log.value
+
+      dynamic "retention_policy" {
+        for_each = try(each.value.logs.retention_policy, null) != null ? [each.value.logs.retention_policy] : []
+
+        content {
+          days    = retention_policy.value.days
+          enabled = retention_policy.value.enabled
+        }
+      }
     }
   }
 
@@ -101,6 +110,26 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
 
     content {
       category_group = enabled_log.value
+    }
+  }
+
+  dynamic "metric" {
+    for_each = {
+      for idx, m in try(each.value.metric, []) : "${m.category}-${idx}" => m
+    }
+
+    content {
+      category = metric.value.category
+      enabled  = metric.value.enabled
+
+      dynamic "retention_policy" {
+        for_each = metric.value.retention_policy != null ? [metric.value.retention_policy] : []
+
+        content {
+          days    = retention_policy.value.days
+          enabled = retention_policy.value.enabled
+        }
+      }
     }
   }
 

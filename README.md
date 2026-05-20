@@ -68,12 +68,24 @@ object({
         categories         = optional(set(string), [])
         category_groups    = optional(set(string), [])
         exclude_categories = optional(set(string), [])
+        retention_policy = optional(object({
+          days    = optional(number)
+          enabled = bool
+        }))
       }), {})
       metrics = optional(object({
         enable_all         = optional(bool, true)
         categories         = optional(set(string), [])
         exclude_categories = optional(set(string), [])
       }), {})
+      metric = optional(list(object({
+        category = string
+        enabled  = optional(bool)
+        retention_policy = optional(object({
+          days    = optional(number)
+          enabled = bool
+        }))
+      })), [])
       diag_name = optional(string)
     })), {})
   })
