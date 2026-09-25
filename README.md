@@ -100,14 +100,6 @@ object({
 
 Default: `{}`
 
-### <a name="input_location"></a> [location](#input\_location)
-
-Description: The location/region where the resources will be created.
-
-Type: `string`
-
-Default: `null`
-
 ## Outputs
 
 The following outputs are exported:
