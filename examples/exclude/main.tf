@@ -1,13 +1,13 @@
 module "naming" {
   source  = "cloudnationhq/naming/azure"
-  version = "~> 0.26"
+  version = "~> 0.32"
 
   suffix = ["demo", "dev"]
 }
 
 module "rg" {
   source  = "cloudnationhq/rg/azure"
-  version = "~> 2.0"
+  version = "~> 3.0"
 
   groups = {
     demo = {
@@ -19,7 +19,7 @@ module "rg" {
 
 module "law" {
   source  = "cloudnationhq/law/azure"
-  version = "~> 3.0"
+  version = "~> 4.0"
 
   workspace = {
     name                = module.naming.log_analytics_workspace.name_unique
@@ -30,7 +30,7 @@ module "law" {
 
 module "storage" {
   source  = "cloudnationhq/sa/azure"
-  version = "~> 4.0"
+  version = "~> 5.0"
 
   storage = {
     name                = module.naming.storage_account.name_unique
@@ -41,7 +41,7 @@ module "storage" {
 
 module "network" {
   source  = "cloudnationhq/vnet/azure"
-  version = "~> 9.0"
+  version = "~> 10.0"
 
   vnet = {
     name                = module.naming.virtual_network.name_unique
@@ -53,13 +53,13 @@ module "network" {
 
 module "diagnostics" {
   source  = "cloudnationhq/mds/azure"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
   destinations = {
     log_analytics_workspace_id = module.law.workspace.id
   }
 
-  config = {
+  diagnostic_settings = {
     settings = {
       storage = {
         target_resource_id = module.storage.account.id

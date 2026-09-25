@@ -1,13 +1,13 @@
 module "naming" {
   source  = "cloudnationhq/naming/azure"
-  version = "~> 0.26"
+  version = "~> 0.32"
 
   suffix = ["demo", "dev"]
 }
 
 module "rg" {
   source  = "cloudnationhq/rg/azure"
-  version = "~> 2.0"
+  version = "~> 3.0"
 
   groups = {
     demo = {
@@ -19,7 +19,7 @@ module "rg" {
 
 module "kv" {
   source  = "cloudnationhq/kv/azure"
-  version = "~> 4.0"
+  version = "~> 6.0"
 
   vault = {
     name                = module.naming.key_vault.name_unique
@@ -31,9 +31,8 @@ module "kv" {
 
 module "eventhub" {
   source  = "cloudnationhq/evh/azure"
-  version = "~> 3.0"
+  version = "~> 4.0"
 
-  naming = local.naming
 
   namespace = {
     name                = module.naming.eventhub_namespace.name_unique
@@ -59,9 +58,9 @@ module "eventhub" {
 
 module "diagnostics" {
   source  = "cloudnationhq/mds/azure"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
-  config = {
+  diagnostic_settings = {
     eventhub_authorization_rule_id = module.eventhub.namespace_authorization_rules.diagnostics.id
     eventhub_name                  = module.eventhub.eventhubs.diagnostics.name
 
