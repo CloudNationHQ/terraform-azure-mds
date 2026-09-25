@@ -1,4 +1,4 @@
-variable "config" {
+variable "diagnostic_settings" {
   description = "Diagnostic settings configuration"
   type = object({
     storage_account_id             = optional(string)
@@ -33,12 +33,6 @@ variable "config" {
   })
 }
 
-variable "naming" {
-  description = "Used for naming purposes"
-  type        = map(string)
-  default     = {}
-}
-
 variable "destinations" {
   description = "Global diagnostic destinations (new or existing)"
   type = object({
@@ -47,5 +41,6 @@ variable "destinations" {
     name                       = optional(string)
     resource_group_name        = optional(string)
   })
-  default = null
+  default  = {}
+  nullable = false
 }

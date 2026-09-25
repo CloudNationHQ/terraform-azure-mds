@@ -17,7 +17,7 @@ output "diagnostic_categories" {
 output "enabled_logs" {
   description = "Enabled log categories per diagnostic setting"
   value = {
-    for key, setting in var.config.settings : key => {
+    for key, setting in var.diagnostic_settings.settings : key => {
       categories = try(setting.logs.enable_all, true) ? setsubtract(
         toset(data.azurerm_monitor_diagnostic_categories.this[key].log_category_types),
         toset(try(setting.logs.exclude_categories, []))
@@ -30,7 +30,7 @@ output "enabled_logs" {
 output "enabled_metrics" {
   description = "Enabled metric categories per diagnostic setting"
   value = {
-    for key, setting in var.config.settings : key => try(setting.metrics.enable_all, true) ? setsubtract(
+    for key, setting in var.diagnostic_settings.settings : key => try(setting.metrics.enable_all, true) ? setsubtract(
       toset(data.azurerm_monitor_diagnostic_categories.this[key].metrics),
       toset(try(setting.metrics.exclude_categories, []))
     ) : toset(try(setting.metrics.categories, []))
