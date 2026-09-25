@@ -104,7 +104,7 @@ module "diagnostics" {
           exclude_categories = ["AllMetrics"]
         }
       }
-    }, {
+      }, {
       for nsg_key, nsg in module.network.network_security_group :
       "nsg_${nsg_key}" => {
         target_resource_id = nsg.id
