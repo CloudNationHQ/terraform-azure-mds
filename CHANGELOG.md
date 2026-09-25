@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/CloudNationHQ/terraform-azure-mds/compare/v2.0.0...v2.1.0) (2026-09-25)
+
+
+### Features
+
+* **deps:** bump golang.org/x/crypto from 0.45.0 to 0.52.0 in /tests ([#19](https://github.com/CloudNationHQ/terraform-azure-mds/issues/19)) ([c634543](https://github.com/CloudNationHQ/terraform-azure-mds/commit/c6345437303209799a1aea4eeb49000519ffd7a4))
+
 ## [2.0.0](https://github.com/CloudNationHQ/terraform-azure-mds/compare/v1.1.0...v2.0.0) (2026-09-25)
 
 
