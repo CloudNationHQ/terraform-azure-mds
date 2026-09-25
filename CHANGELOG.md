@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.0](https://github.com/CloudNationHQ/terraform-azure-mds/compare/v1.1.0...v2.0.0) (2026-09-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* this change causes recreates
+
+### Features
+
+* azurerm provider 5 upgrade ([#18](https://github.com/CloudNationHQ/terraform-azure-mds/issues/18)) ([121b68d](https://github.com/CloudNationHQ/terraform-azure-mds/commit/121b68d08a6567537343cde1ff7b352a35eb3129))
+* **deps:** bump github.com/cloudnationhq/az-cn-go-validor in /tests ([#12](https://github.com/CloudNationHQ/terraform-azure-mds/issues/12)) ([1aec3ca](https://github.com/CloudNationHQ/terraform-azure-mds/commit/1aec3cafd8a8c94fb553745fb1d5b1c82e5abc7d))
+* **deps:** bump golang.org/x/crypto from 0.45.0 to 0.52.0 in /tests ([#16](https://github.com/CloudNationHQ/terraform-azure-mds/issues/16)) ([e3bfdef](https://github.com/CloudNationHQ/terraform-azure-mds/commit/e3bfdef0ca6396aaade651601e8d2b744c9f0bde))
+
 ## [1.1.0](https://github.com/CloudNationHQ/terraform-azure-mds/compare/v1.0.0...v1.1.0) (2026-03-30)
 
 
